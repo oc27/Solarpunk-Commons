@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My profile — Solarpunk Commons</title><link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="config.js"></script><script defer src="profile.js"></script></head>
+<body><header><a class="brand" href="index.html">✳ SOLARPUNK COMMONS</a><nav><a href="people.html">People</a><a href="projects.html">Projects</a><a href="profile.html">My profile</a><button class="nav-button" id="sign-out" type="button">Sign out</button></nav></header>
+<main class="formpage"><a href="index.html">← Back to the commons</a><p class="eyebrow">YOUR PLACE IN THE COMMONS</p><h1>My <em>profile.</em></h1><p class="lead">Keep your introduction up to date. The information below appears in the public People directory.</p>
+<form id="profile-form">
+<label>Name *<input name="name" required maxlength="80"></label>
+<label>Where are you based?<input name="location" maxlength="100" placeholder="Neighbourhood, city, region…"></label>
+<label>A little about you<textarea name="introduction" rows="4" maxlength="600" placeholder="Your practice, interests, experience, questions…"></textarea></label>
+<fieldset><legend>What are you interested in?</legend><small>Choose as many as you like.</small><div class="checks">
+<label class="check"><input type="checkbox" name="interests" value="Art & culture">Art & culture</label>
+<label class="check"><input type="checkbox" name="interests" value="Ecology & regeneration">Ecology & regeneration</label>
+<label class="check"><input type="checkbox" name="interests" value="Technology & open source">Technology & open source</label>
+<label class="check"><input type="checkbox" name="interests" value="Food & agriculture">Food & agriculture</label>
+<label class="check"><input type="checkbox" name="interests" value="Education & learning">Education & learning</label>
+<label class="check"><input type="checkbox" name="interests" value="Politics & organising">Politics & organising</label>
+<label class="check"><input type="checkbox" name="interests" value="Architecture & design">Architecture & design</label>
+<label class="check"><input type="checkbox" name="interests" value="Economics & cooperatives">Economics & cooperatives</label>
+<label class="check"><input type="checkbox" name="interests" value="Science & research">Science & research</label>
+<label class="check"><input type="checkbox" name="interests" value="Music & performance">Music & performance</label>
+<label class="check"><input type="checkbox" name="interests" value="Care & health">Care & health</label>
+<label class="check"><input type="checkbox" name="interests" value="Other">Other</label>
+</div></fieldset>
+<label>What would you like to explore, contribute or make happen?<textarea name="contribution" rows="4" maxlength="800"></textarea></label>
+<button class="button" type="submit">Save profile ↗</button><p id="form-message" role="status"></p>
+<small>Your email address and password are not displayed on your public profile.</small></form></main>
+<footer><a class="brand" href="index.html">✳ SOLARPUNK COMMONS</a><span>An experiment in making things possible together.</span></footer></body></html>
