@@ -1,1 +1,33 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Projects — Solarpunk Commons</title><link rel="stylesheet" href="styles.css"></head><body><header><a class="brand" href="index.html">✳ SOLARPUNK COMMONS</a><nav><a href="people.html">People</a><a href="projects.html">Projects</a><a href="research-topics.html">Research topics</a><a href="login.html">Sign in</a><a href="profile.html">My profile</a><a href="register.html">Join ↗</a></nav></header><main class="directory"><p class="eyebrow">IDEAS IN MOTION</p><h1>Projects are <em>seeds.</em></h1><p class="lead">A shared space for experiments, initiatives and unfinished ideas. The first version of the Commons starts with people; project submissions are the next step.</p><section class="coming"><h2>Coming into being</h2><p>We're building the project-sharing tools now. In the meantime, introduce yourself and tell the community what you'd like to make happen.</p><a class="button" href="register.html">Share what you're imagining ↗</a></section></main><footer><a class="brand" href="index.html">✳ SOLARPUNK COMMONS</a><span>An experiment in making things possible together.</span></footer></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Projects — Solarpunk Commons</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script defer src="projects.js"></script>
+</head>
+<body>
+<header><a class="brand" href="index.html">✳ SOLARPUNK COMMONS</a><nav><a href="people.html">People</a><a href="projects.html">Projects</a><a href="offers-needs.html">Offers & needs</a><a href="research-topics.html">Research topics</a><a href="profile.html">My profile</a><a href="register.html">Join ↗</a></nav></header>
+<main class="directory projects-page">
+ <p class="eyebrow">IDEAS IN MOTION · OPEN CALLS FOR COLLABORATION</p>
+ <h1>Projects are <em>seeds.</em></h1>
+ <p class="lead">A place to share things that are already happening, things that need a hand, and ideas looking for their people. Browse what's growing, or add a project of your own.</p>
+ <div class="projects-toolbar"><div><span id="project-count" class="muted">Loading projects…</span></div><button class="button" id="show-project-form" type="button">＋ Share a project</button></div>
+ <section id="project-editor" class="project-editor" hidden>
+  <div class="editor-heading"><div><p class="eyebrow">ADD TO THE COMMONS</p><h2 id="editor-title">Share a project</h2></div><button class="text-button" id="cancel-project" type="button">Close ×</button></div>
+  <p class="muted">You can come back and edit or remove your project at any time. Projects are public and linked to your Commons profile.</p>
+  <form id="project-form">
+   <label>Project name *<input name="name" required maxlength="120" placeholder="Give your project a name"></label>
+   <label>Project location<input name="location" maxlength="160" placeholder="Neighbourhood, city, region — or online"></label>
+   <label>Details of project *<textarea name="details" required rows="5" maxlength="4000" placeholder="What are you making happen? What's the idea, why does it matter, and what's already underway?"></textarea></label>
+   <label>How to apply or participate *<textarea name="participation" required rows="3" maxlength="2000" placeholder="Who are you looking for? How can someone get involved? Include a contact method, link or next step."></textarea></label>
+   <button class="button" type="submit" id="save-project">Publish project ↗</button><p id="project-form-message" role="status"></p>
+  </form>
+ </section>
+ <div id="projects-list" class="projects-grid" aria-live="polite"><p>Loading projects…</p></div>
+ <p class="project-footnote">Projects are shared by members of the Commons. Please contact project owners directly to ask questions or offer support.</p>
+</main>
+<footer><a class="brand" href="index.html">✳ SOLARPUNK COMMONS</a><span>An experiment in making things possible together.</span></footer>
+</body></html>

@@ -1,22 +1,34 @@
-# Solarpunk Commons MVP
+# Solarpunk Commons — consolidated MVP
 
-A static GitHub Pages starter connected directly to Supabase. Includes a landing page, email/password registration, profile creation, searchable public member directory, and a projects placeholder.
+A static GitHub Pages site connected to Supabase. This version brings together member profiles, research topics, projects, and member offers & needs.
 
-## Install
-1. Unzip this folder and copy its contents into the **root** of your existing GitHub Pages repository. Back up your existing `index.html` first if you want to keep it.
-2. Edit `config.js`. Replace the URL and key placeholders with your Supabase **Project URL** and **Publishable key** (older projects may label this `anon` key). Never use a secret or service_role key in browser code.
-3. In Supabase, open **SQL Editor → New query**, paste all of `supabase-setup.sql`, and click **Run**.
-4. In Supabase **Authentication → URL Configuration**, set Site URL to `https://solarpunkcommons.com` and add `https://solarpunkcommons.com/**` to Redirect URLs.
-5. In **Authentication → Providers → Email**, enable email/password sign-up. Keep email confirmation on.
-6. Commit and push the files to GitHub. Visit `https://solarpunkcommons.com/register.html` to test.
+## Update an existing site
+1. Download and unzip this folder.
+2. Copy the contents of `solarpunk-commons-mvp` into the root of your existing GitHub repository, replacing the previous site files.
+3. **Keep your existing `config.js`**. The copy in this ZIP is a placeholder; do not overwrite the file containing your Supabase Project URL and publishable key.
+4. In Supabase, open **SQL Editor → New query**. Paste the entire contents of `all-database-setup.sql` and click **Run**. It creates/updates the tables and policies for profiles, research topics, projects, and offers & needs. Existing member data is not deleted.
+5. Commit and push the updated site files to GitHub. Wait for GitHub Pages to deploy, then refresh your domain.
 
-## Test
-Register using an email you can access. Confirm via the email link. Check **Table Editor → profiles** in Supabase, then visit `/people.html`.
+If you have already run some of the earlier SQL setup files, the consolidated script is designed to be safe to run again: it uses `create table if not exists` and replaces named policies. If Supabase reports an error, stop and share the exact error rather than running fragments at random.
 
-## Privacy and security
-The directory is public. Names, locations, introductions, interests and contribution statements are visible to anyone. Email addresses and passwords are not in the public profiles table. The form requires consent to public display. RLS lets anyone read public profiles and lets authenticated members update only their own record. The signup trigger creates profiles; users cannot insert arbitrary profiles.
+## What members can do
+- Create and edit a public research identity.
+- Browse the People directory.
+- Answer open research questions and return to edit answers.
+- Publish, edit and delete their own projects.
+- Add offers and needs (hospitality, somewhere to live/stay, workspace, skills, local knowledge, collaboration, etc.). Offers and needs can be public or private; private entries are visible only to their owner.
 
-This is an MVP, not a fully hardened community platform. Before a wider launch, consider profile editing, account deletion, moderation/reporting, rate limiting/CAPTCHA, a privacy policy and a community agreement. Do not collect sensitive personal information in public profile fields.
+## Configuration and security
+`config.js` must contain the Supabase Project URL and the **publishable** key (or legacy anon key). Never put a service-role or secret key in browser code. Email addresses and passwords are not exposed in the public profile table.
+
+The directory, projects and public offers/needs are public. Members can only edit their own records. Private offers/needs are protected by row-level security and are not returned to other members. Keep location descriptions general; never publish a home address or sensitive personal details. This is an early community tool, not a housing, booking or safeguarding service. Members should arrange stays and meetings directly and use their judgement about safety.
 
 ## Files
-`index.html` landing page · `register.html` signup form · `people.html` directory · `projects.html` placeholder · `styles.css` styling · `config.js` Supabase connection · `auth.js` signup · `people.js` directory logic · `supabase-setup.sql` database setup.
+- `index.html` — homepage and explanation of what people can do
+- `people.html` / `people.js` — member directory and contributions
+- `projects.html` / `projects.js` — project listings and editor
+- `offers-needs.html` / `offers-needs.js` — hospitality, offers and needs
+- `research-topics.html` / `research.js` — collective research questions
+- `register.html`, `login.html`, `profile.html` — account and profile pages
+- `all-database-setup.sql` — consolidated Supabase setup
+- `config.js` — your local Supabase connection settings (preserve your existing file)
