@@ -1,7 +1,7 @@
 -- Run once in Supabase > SQL Editor > New query.
 create table if not exists public.profiles (
  id uuid primary key references auth.users(id) on delete cascade,
- name text, location text, introduction text,
+ name text, location text, location_lat double precision, location_lng double precision, introduction text,
  interests text[] not null default '{}',
  contribution text, created_at timestamptz not null default now()
 );
@@ -16,11 +16,13 @@ create or replace function public.create_profile_for_new_user()
 returns trigger language plpgsql security definer set search_path = ''
 as $$
 begin
- insert into public.profiles(id,name,location,introduction,interests,contribution)
+ insert into public.profiles(id,name,location,location_lat,location_lng,introduction,interests,contribution)
  values (
   new.id,
   nullif(new.raw_user_meta_data->>'name',''),
   nullif(new.raw_user_meta_data->>'location',''),
+  nullif(new.raw_user_meta_data->>'location_lat','')::double precision,
+  nullif(new.raw_user_meta_data->>'location_lng','')::double precision,
   nullif(new.raw_user_meta_data->>'introduction',''),
   coalesce(array(select jsonb_array_elements_text(coalesce(new.raw_user_meta_data->'interests','[]'::jsonb))),'{}'::text[]),
   nullif(new.raw_user_meta_data->>'contribution','')

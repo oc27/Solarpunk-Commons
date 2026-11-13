@@ -7,10 +7,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   window.location.href="login.html?next=profile.html";return;
  }
  const user=session.user;
- const {data:profile,error}=await client.from("profiles").select("name,location,introduction,interests,contribution").eq("id",user.id).maybeSingle();
+ const {data:profile,error}=await client.from("profiles").select("name,location,location_lat,location_lng,introduction,interests,contribution").eq("id",user.id).maybeSingle();
  if(error){msg.textContent="Couldn't load your profile: "+error.message;msg.className="error";return;}
  if(profile){
   for(const key of ["name","location","introduction","contribution"]) form.elements[key].value=profile[key]||"";
+  form.elements.location_lat.value=profile.location_lat??"";form.elements.location_lng.value=profile.location_lng??"";
   const selected=profile.interests||[];
   form.querySelectorAll('input[name="interests"]').forEach(box=>box.checked=selected.includes(box.value));
  } else {
@@ -24,6 +25,8 @@ document.addEventListener("DOMContentLoaded", async () => {
    id:user.id,
    name:form.elements.name.value.trim(),
    location:form.elements.location.value.trim()||null,
+   location_lat:form.elements.location_lat.value?Number(form.elements.location_lat.value):null,
+   location_lng:form.elements.location_lng.value?Number(form.elements.location_lng.value):null,
    introduction:form.elements.introduction.value.trim()||null,
    interests:[...form.querySelectorAll('input[name="interests"]:checked')].map(x=>x.value),
    contribution:form.elements.contribution.value.trim()||null

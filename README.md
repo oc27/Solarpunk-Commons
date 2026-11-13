@@ -1,34 +1,33 @@
-# Solarpunk Commons — consolidated MVP
+# Solarpunk Commons — research directory MVP
 
-A static GitHub Pages site connected to Supabase. This version brings together member profiles, research topics, projects, and member offers & needs.
+A static GitHub Pages site connected to Supabase. The current experience is intentionally simple: people create a co-researcher profile, browse the directory, and answer the first shared research questions.
 
-## Update an existing site
-1. Download and unzip this folder.
-2. Copy the contents of `solarpunk-commons-mvp` into the root of your existing GitHub repository, replacing the previous site files.
-3. **Keep your existing `config.js`**. The copy in this ZIP is a placeholder; do not overwrite the file containing your Supabase Project URL and publishable key.
-4. In Supabase, open **SQL Editor → New query**. Paste the entire contents of `all-database-setup.sql` and click **Run**. It creates/updates the tables and policies for profiles, research topics, projects, and offers & needs. Existing member data is not deleted.
-5. Commit and push the updated site files to GitHub. Wait for GitHub Pages to deploy, then refresh your domain.
+## Update your existing site
+1. Unzip this folder and copy its contents into the root of your GitHub repository, replacing the previous site files.
+2. **Keep your existing `config.js`**; the ZIP version is only a placeholder. It must contain your Supabase project URL and publishable key.
+3. In Supabase SQL Editor, run `location-map-migration.sql` once. This adds latitude/longitude columns while preserving existing profile location text.
+4. Commit and push to GitHub, then refresh your domain after Pages deploys.
 
-If you have already run some of the earlier SQL setup files, the consolidated script is designed to be safe to run again: it uses `create table if not exists` and replaces named policies. If Supabase reports an error, stop and share the exact error rather than running fragments at random.
+## Current participation flow
+- Create and edit a public co-researcher profile.
+- Browse and search the co-researcher directory.
+- Expand profile sections to read longer introductions and research contributions.
+- Answer the open research questions and return later to edit answers.
 
-## What members can do
-- Create and edit a public research identity.
-- Browse the People directory.
-- Answer open research questions and return to edit answers.
-- Publish, edit and delete their own projects.
-- Add offers and needs (hospitality, somewhere to live/stay, workspace, skills, local knowledge, collaboration, etc.). Offers and needs can be public or private; private entries are visible only to their owner.
+## Location data for a future map
+Members enter a general place name (town, city or region), not a street address. The form looks up an approximate point using OpenStreetMap Nominatim and saves the place label plus `location_lat` and `location_lng` as numeric coordinates in `profiles`. The coordinates are suitable for plotting approximate markers on a future map. Existing text-only locations remain intact; their coordinates will be blank until members edit and look them up. Nominatim attribution and usage policy apply.
 
-## Configuration and security
-`config.js` must contain the Supabase Project URL and the **publishable** key (or legacy anon key). Never put a service-role or secret key in browser code. Email addresses and passwords are not exposed in the public profile table.
+## Security
+Keep only the Supabase publishable/anon key in browser code; never expose a service-role key. Email addresses and passwords are not displayed in the public directory. Public profile answers are visible to visitors. Members can edit their own profile and research contributions.
 
-The directory, projects and public offers/needs are public. Members can only edit their own records. Private offers/needs are protected by row-level security and are not returned to other members. Keep location descriptions general; never publish a home address or sensitive personal details. This is an early community tool, not a housing, booking or safeguarding service. Members should arrange stays and meetings directly and use their judgement about safety.
+## Main files
+- `index.html` — homepage and two-step participation callout
+- `register.html`, `auth.js` — account creation and profile setup
+- `profile.html`, `profile.js` — editable profile
+- `people.html`, `people.js` — co-researcher directory
+- `research-topics.html`, `research.js` — shared research questions and answers
+- `location.js` — approximate geocoding for map-ready profile locations
+- `location-map-migration.sql` — one-time Supabase migration
+- `config.js` — preserve your existing Supabase connection settings
 
-## Files
-- `index.html` — homepage and explanation of what people can do
-- `people.html` / `people.js` — member directory and contributions
-- `projects.html` / `projects.js` — project listings and editor
-- `offers-needs.html` / `offers-needs.js` — hospitality, offers and needs
-- `research-topics.html` / `research.js` — collective research questions
-- `register.html`, `login.html`, `profile.html` — account and profile pages
-- `all-database-setup.sql` — consolidated Supabase setup
-- `config.js` — your local Supabase connection settings (preserve your existing file)
+The old project and offers/needs database tables, if already created, are left untouched. They are no longer part of the site interface.

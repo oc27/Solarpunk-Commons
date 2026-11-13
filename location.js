@@ -1,0 +1,6 @@
+document.addEventListener("DOMContentLoaded",()=>{
+ const input=document.querySelector('input[name="location"]');if(!input)return;
+ const form=input.form,lat=form?.elements.location_lat,lng=form?.elements.location_lng,status=input.parentElement.querySelector('.location-status');let timer;
+ input.addEventListener('input',()=>{if(lat)lat.value='';if(lng)lng.value='';if(status)status.textContent='';});
+ input.addEventListener('change',()=>{clearTimeout(timer);const query=input.value.trim();if(query.length<2)return;timer=setTimeout(async()=>{if(status)status.textContent='Finding approximate location…';try{const url='https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q='+encodeURIComponent(query);const response=await fetch(url,{headers:{'Accept-Language':'en'}});if(!response.ok)throw new Error('Lookup unavailable');const results=await response.json();if(results.length){if(lat)lat.value=results[0].lat;if(lng)lng.value=results[0].lon;if(status)status.textContent='Approximate map location found: '+results[0].display_name+'.';}else if(status)status.textContent='No map location found. You can still save the place name.';}catch(e){if(status)status.textContent='Map lookup unavailable. You can still save the place name.';}},900);});
+});
